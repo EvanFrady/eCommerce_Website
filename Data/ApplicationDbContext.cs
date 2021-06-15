@@ -15,9 +15,11 @@ namespace eCommerce_Website.Data
         {
         }
 
-        public DbSet<CategoryTypes> CategoryTypes { get; set; }
+        public DbSet<ProductTypes> ProductTypes { get; set; }
 
         public DbSet<Products> Products { get; set; }
+
+        public DbSet<SpecialTag> SpecialTags { get; set; }
 
     }
 }

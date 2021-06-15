@@ -9,19 +9,18 @@ using eCommerce_Website.Models;
 namespace eCommerce_Website.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryTypesController : Controller
+    public class ProductTypesController : Controller
     {
         private ApplicationDbContext _db;
 
-        public CategoryTypesController(ApplicationDbContext db)
+        public ProductTypesController(ApplicationDbContext db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            //var data = _db.Category.ToList();
-            return View(_db.CategoryTypes.ToList());
+            return View(_db.ProductTypes.ToList());
         }
 
         //GET Create Action Method
@@ -37,11 +36,11 @@ namespace eCommerce_Website.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CategoryTypes categoryTypes)
+        public async Task<IActionResult> Create(ProductTypes categoryTypes)
         {
             if(ModelState.IsValid)
             {
-                _db.CategoryTypes.Add(categoryTypes);
+                _db.ProductTypes.Add(categoryTypes);
                 await _db.SaveChangesAsync();
                 TempData["save"] = "Product type has been saved";
                 return RedirectToAction(nameof(Index));
@@ -58,7 +57,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var categoryType = _db.CategoryTypes.Find(id);
+            var categoryType = _db.ProductTypes.Find(id);
             if (categoryType == null)
             {
                 return NotFound();
@@ -70,7 +69,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CategoryTypes categoryTypes)
+        public async Task<IActionResult> Edit(ProductTypes categoryTypes)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +90,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var categoryType = _db.CategoryTypes.Find(id);
+            var categoryType = _db.ProductTypes.Find(id);
             if (categoryType == null)
             {
                 return NotFound();
@@ -103,7 +102,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Details(CategoryTypes categoryTypes)
+        public IActionResult Details(ProductTypes categoryTypes)
         {
             return RedirectToAction(nameof(Index));
 
@@ -118,7 +117,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var categoryType = _db.CategoryTypes.Find(id);
+            var categoryType = _db.ProductTypes.Find(id);
             if (categoryType == null)
             {
                 return NotFound();
@@ -130,7 +129,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int? id, CategoryTypes categoryTypes)
+        public async Task<IActionResult> Delete(int? id, ProductTypes categoryTypes)
         {
             if(id==null)
             {
@@ -142,7 +141,7 @@ namespace eCommerce_Website.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var categoryType = _db.CategoryTypes.Find(id);
+            var categoryType = _db.ProductTypes.Find(id);
             if (categoryType == null)
             {
                 return NotFound();

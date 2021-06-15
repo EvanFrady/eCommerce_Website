@@ -1,163 +1,159 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eCommerce_Website.Data;
+using Microsoft.AspNetCore.Mvc;
+using eCommerce_Website.Models;
 
-//using eCommerce_Website.Data;
+namespace eCommerce_Website.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class SpecialTagController : Controller
+    {
 
-//using Microsoft.AspNetCore.Mvc;
+        private ApplicationDbContext _db;
 
-//using eCommerce_Website.Data;
-//using eCommerce_Website.Models;
+        public SpecialTagController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
 
-//namespace OnlineShop.Areas.Admin.Controllers
-//{
-//    [Area("Admin")]
-//    public class SpecialTagController : Controller
-//    {
+        //GET Index Action Method
+        public IActionResult Index()
+        {
+            return View(_db.SpecialTags.ToList());
+        }
 
-//        private ApplicationDbContext _db;
+        //GET Create Action Method
 
-//        public SpecialTagController(ApplicationDbContext db)
-//        {
-//            _db = db;
-//        }
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-//        //GET Index Action Method
-//        public IActionResult Index()
-//        {
-//            return View(_db.SpecialTags.ToList());
-//        }
+        //POST Create Action Method
 
-//        //GET Create Action Method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(SpecialTag specialTag)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.SpecialTags.Add(specialTag);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-//        public ActionResult Create()
-//        {
-//            return View();
-//        }
+            return View(specialTag);
+        }
 
-//        //POST Create Action Method
+        //GET Edit Action Method
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Create(SpecialTag specialTag)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _db.SpecialTags.Add(specialTag);
-//                await _db.SaveChangesAsync();
-//                return RedirectToAction(nameof(Index));
-//            }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-//            return View(specialTag);
-//        }
+            var specialTag = _db.SpecialTags.Find(id);
+            if (specialTag == null)
+            {
+                return NotFound();
+            }
+            return View(specialTag);
+        }
 
-//        //GET Edit Action Method
+        //POST Edit Action Method
 
-//        public ActionResult Edit(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(SpecialTag specialTag)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Update(specialTag);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-//            var specialTag = _db.SpecialTags.Find(id);
-//            if (specialTag == null)
-//            {
-//                return NotFound();
-//            }
-//            return View(specialTag);
-//        }
+            return View(specialTag);
+        }
 
-//        //POST Edit Action Method
+        //GET Details Action Method
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Edit(SpecialTag specialTag)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _db.Update(specialTag);
-//                await _db.SaveChangesAsync();
-//                return RedirectToAction(nameof(Index));
-//            }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-//            return View(specialTag);
-//        }
+            var specialTag = _db.SpecialTags.Find(id);
+            if (specialTag == null)
+            {
+                return NotFound();
+            }
+            return View(specialTag);
+        }
 
-//        //GET Details Action Method
+        //POST Edit Action Method
 
-//        public ActionResult Details(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(SpecialTag specialTag)
+        {
+            return RedirectToAction(nameof(Index));
 
-//            var specialTag = _db.SpecialTags.Find(id);
-//            if (specialTag == null)
-//            {
-//                return NotFound();
-//            }
-//            return View(specialTag);
-//        }
+        }
 
-//        //POST Edit Action Method
+        //GET Delete Action Method
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult Details(SpecialTag specialTag)
-//        {
-//            return RedirectToAction(nameof(Index));
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-//        }
+            var specialTag = _db.SpecialTags.Find(id);
+            if (specialTag == null)
+            {
+                return NotFound();
+            }
+            return View(specialTag);
+        }
 
-//        //GET Delete Action Method
+        //POST Delete Action Method
 
-//        public ActionResult Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int? id, SpecialTag specialTag)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-//            var specialTag = _db.SpecialTags.Find(id);
-//            if (specialTag == null)
-//            {
-//                return NotFound();
-//            }
-//            return View(specialTag);
-//        }
-visual
-//        //POST Delete Action Method
+            if (id != specialTag.Id)
+            {
+                return NotFound();
+            }
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Delete(int? id, SpecialTag specialTag)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+            var specialTags = _db.SpecialTags.Find(id);
+            if (specialTags == null)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Remove(specialTags);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-//            if (id != specialTag.Id)
-//            {
-//                return NotFound();
-//            }
-
-//            var specialTags = _db.SpecialTags.Find(id);
-//            if (specialTags == null)
-//            {
-//                return NotFound();
-//            }
-//            if (ModelState.IsValid)
-//            {
-//                _db.Remove(specialTags);
-//                await _db.SaveChangesAsync();
-//                return RedirectToAction(nameof(Index));
-//            }
-
-//            return View(specialTag);
-//        }
-//    }
-//}
+            return View(specialTag);
+        }
+    }
+}

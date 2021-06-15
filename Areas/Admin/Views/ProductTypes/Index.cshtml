@@ -1,5 +1,5 @@
 ﻿@using eCommerce_Website.Models;
-@model IEnumerable<CategoryTypes>
+@model IEnumerable<ProductTypes>
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,10 +8,10 @@
 <br>
 <div class="row">
     <div class="col-6">
-        <h2 class="text-info">Category Type List</h2>
+        <h2 class="text-info">Product Type List</h2>
     </div>
     <div class="col-6 text-right">
-        <a asp-action="Create" class="btn btn-info"><i class="far fa-plus-square"></i>&nbsp;  New Category Type</a>
+        <a asp-action="Create" class="btn btn-info"><i class="far fa-plus-square"></i>&nbsp;  New Product Type</a>
     </div>
 </div>
 <br />
@@ -19,7 +19,7 @@
     <table class="table table-striped border">
         <tr class="table-info">
             <th>
-                @Html.DisplayNameFor(c => c.CategoryType)
+                @Html.DisplayNameFor(c => c.ProductType)
             </th>
             <th></th>
             <th></th>
@@ -27,7 +27,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.CategoryType</td>
+                <td>@item.ProductType</td>
                 <td>
                     <partial name="_ButtonPartial" model="@item.Id" />
                 </td>

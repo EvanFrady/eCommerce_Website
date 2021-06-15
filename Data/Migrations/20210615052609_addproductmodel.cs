@@ -6,22 +6,6 @@ namespace eCommerce_Website.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DropTable(
-                //name: "Category");
-
-            //migrationBuilder.CreateTable(
-            //    name: "CategoryTypes",
-            //    columns: table => new
-            //    {
-            //        Id = table.Column<int>(nullable: false)
-            //            .Annotation("SqlServer:Identity", "1, 1"),
-            //        CategoryType = table.Column<string>(nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK_CategoryTypes", x => x.Id);
-            //    });
-
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
@@ -33,23 +17,23 @@ namespace eCommerce_Website.Data.Migrations
                     Image = table.Column<string>(nullable: true),
                     ProductColor = table.Column<string>(nullable: true),
                     IsAvailable = table.Column<bool>(nullable: false),
-                    CategoryTypeId = table.Column<int>(nullable: false)
+                    ProductTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_CategoryTypes_CategoryTypeId",
-                        column: x => x.CategoryTypeId,
-                        principalTable: "CategoryTypes",
+                        name: "FK_Products_ProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "ProductTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryTypeId",
+                name: "IX_Products_ProductTypeId",
                 table: "Products",
-                column: "CategoryTypeId");
+                column: "ProductTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -58,19 +42,19 @@ namespace eCommerce_Website.Data.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "CategoryTypes");
+                name: "ProductTypes");
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ProductType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
         }
     }

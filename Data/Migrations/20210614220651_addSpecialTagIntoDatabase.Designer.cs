@@ -10,8 +10,8 @@ using eCommerce_Website.Data;
 namespace eCommerce_Website.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614202911_addproductmodel")]
-    partial class addproductmodel
+    [Migration("20210614220651_addSpecialTagIntoDatabase")]
+    partial class addSpecialTagIntoDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,20 +221,20 @@ namespace eCommerce_Website.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("eCommerce_Website.Models.CategoryTypes", b =>
+            modelBuilder.Entity("eCommerce_Website.Models.ProductTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CategoryType")
+                    b.Property<string>("ProductType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CategoryTypes");
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("eCommerce_Website.Models.Products", b =>
@@ -244,7 +244,7 @@ namespace eCommerce_Website.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryTypeId")
+                    b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -265,9 +265,24 @@ namespace eCommerce_Website.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryTypeId");
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("eCommerce_Website.Models.SpecialTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SpecialTags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -323,9 +338,9 @@ namespace eCommerce_Website.Data.Migrations
 
             modelBuilder.Entity("eCommerce_Website.Models.Products", b =>
                 {
-                    b.HasOne("eCommerce_Website.Models.CategoryTypes", "CategoryTypes")
+                    b.HasOne("eCommerce_Website.Models.ProductTypes", "ProductTypes")
                         .WithMany()
-                        .HasForeignKey("CategoryTypeId")
+                        .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
